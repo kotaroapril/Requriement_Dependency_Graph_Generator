@@ -3,13 +3,13 @@
 #include <string.h>
 
 #include "../include/parse.h"
-#include "../include/queue.h"
+#include "../include/stack.h"
 #include "../include/seen_set.h"
 #include "../include/map_dependency.h"
 
 void parse_file (const char *filename) {
     // Create a queue to hold files to be processed
-    Queue *queue = create_queue();
+    Stack *stack = create_stack();
 
     // Create a seen set to keep track of processed files
     SeenSet *seen_set = create_seen_set();
@@ -18,7 +18,7 @@ void parse_file (const char *filename) {
     MapDependency *map = create_map_dependency();
     
     // Add the initial file to the queue and seen set
-    enqueue(queue, filename);
+    push(stack, filename);
     add_to_seen_set(seen_set, filename);
 
     /* While the queue is not empty:

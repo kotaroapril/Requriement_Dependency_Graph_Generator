@@ -20,7 +20,8 @@ typedef struct MapDependency {
 
 MapDependency* create_map_dependency();
 int is_map_dependency_empty(MapDependency *map);
-int add_dependency(MapDependency *map, const char *filename, const char *dependency);   
+int add_dependency(MapDependency *map, const char *filename, const char *dependency_filename);
+int is_file_in_map(MapDependency *map, const char *filename);   
 char** get_dependencies(MapDependency *map, const char *filename, int *count);
 void free_map_dependency(MapDependency *map);
 

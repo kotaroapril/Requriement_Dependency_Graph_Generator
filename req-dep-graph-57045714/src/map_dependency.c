@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+
 #include "../include/map_dependency.h"
 
 
@@ -16,17 +17,21 @@ MapDependency* create_map_dependency() {
 // Check if the map dependency is empty
 int is_map_dependency_empty(MapDependency *map) {
     /*
-        Return 1 if empty, 0 otherwise
+        Head is NULL?
+        Return 1 if yes, 0 otherwise
     */
 }
 
 // Add a dependency to the map
-int add_dependency(MapDependency *map, const char *filename, const char *dependency) {
+int add_dependency(MapDependency *map, const char *filename, const char *dependency_filename) {
     /* 
-        Is the file already in the map?
-        If it is, add the dependency to the file
-        If it is not, create a new file node and add it to the map
-        Add the dependency to the file node
+        Call is_map_dependency_empty to check if the map for the filename is empty
+        If retrurns 1, create a new file node and set dependency_filename as the first dependency/head
+
+        Call is_file_in_map to check if the dependency_filename is already in the filename's dependencies
+        If it is, return 0
+
+        If it is not, create a FileNode for the dependency_filename and add it to the list of dependencies
         Return 1 if the dependency was added successfully, 0 otherwise
     */
 
@@ -35,6 +40,7 @@ int add_dependency(MapDependency *map, const char *filename, const char *depende
 // Check if the file is already in the map
 int is_file_in_map(MapDependency *map, const char *filename) {
     /*
+        Traverse the map to check if the file is already in the map
         Return 1 if file is already in map, 0 otherwise
     */
     return 0;

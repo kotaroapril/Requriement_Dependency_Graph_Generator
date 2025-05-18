@@ -3,29 +3,40 @@
 #include <string.h>
 
 #include "../include/parse.h"
-#include "../include/draw_diagram.h"
+#include "../include/seen_set.h"
+#include "../include/map_dependency.h"
 #include "../include/sort_dependency.h"
+#include "../include/draw_diagram.h"
 
 int main() {
 
     char filename[256];
+    MapDependency *map = create_map_dependency();
+    SeenSet *seen_set = create_seen_set();
+    
+    /*  Ask the user for a filename
+        If the user enters an empty string, loop back to ask for a filename
 
-    /*  Ask the user for a file name
-        Remove the newline character from the input
-        Check if the file exists or empty
-        If it does not exist or is empty, print an error message
-            then loop back to ask for a file name
-        If it exists, call the parse_file function
+        Remove the newline character from the filename
+
+        Check if the file exists
+        If it does not exist, print an error message and loop back to ask for a filename
+        
+        If it exists, break the loop
     */ 
 
     // Parse the file to extract dependencies
-    parse_file(filename);
+    parse_file(filename, map, seen_set);
 
     // Sort the dependencies
-    sort_dependencies();
+    sort_dependencies(map);
 
     // Draw the dependency tree diagram
-    draw_diagram();
+    draw_diagram(map);
 
-    return EXIT_SUCCESS;
+    // Free memory
+    free_map_dependency(map);
+    free_seen_set(seen_set);
+
+    return 0;
 }

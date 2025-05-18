@@ -1,0 +1,8 @@
+{
+    "files.associations": {
+        "sort_dependency.h": "c",
+        "parse.h": "c",
+        "map_dependency.h": "c",
+        "draw_diagram.h": "c"
+    }
+}

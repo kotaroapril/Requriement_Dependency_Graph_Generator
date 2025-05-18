@@ -33,6 +33,8 @@ int add_to_seen_set(SeenSet *seen_set, const char *filename) {
 // Check if a file is in the seen set
 int is_in_seen_set(SeenSet *seen_set, const char *filename) {
     /*
+        Call is_seen_set_empty, if returns 1, return 0
+        
         Traverse the seen set to check if the file is already in the seen set
         Return 1 if it is, 0 otherwise
     */

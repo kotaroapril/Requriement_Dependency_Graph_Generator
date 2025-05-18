@@ -3,35 +3,32 @@
 #include <string.h>
 
 #include "../include/parse.h"
-#include "../include/stack.h"
 #include "../include/seen_set.h"
 #include "../include/map_dependency.h"
 
-void parse_file (const char *filename) {
-    // Create a stack to hold files to be processed
-    Stack *stack = create_stack();
-
-    // Create a seen_set to keep track of processed files
-    SeenSet *seen_set = create_seen_set();
-
-    // Create a map to hold file dependencies   
-    MapDependency *map = create_map_dependency();
+void parse_file (const char *filename, MapDependency *map, SeenSet *seen_set) {
     
-    // Add the initial file to the queue and seen set
-    push(stack, filename);
-    add_to_seen_set(seen_set, filename);
+    const char current_file = filename;
 
-    /* While the queue is not empty:
-        Dequeue a file from the queue
-        Open the file and read its contents
-        For each line in the file:
-            If the line contains a #include directive:
-                Extract the filename from the directive
-                Add the dependency to the map
-                If the dependency is not in the seen set:
-                    Enqueue the dependency and add it to the seen set
-    Clean up:
-        Free the queue, seen set, and map    
+    // Check is filename is in seen set already
+    if (is_in_seen_set(seen_set, current_file)) {
+        return; // File already seen, no need to parse again
+    }
+    
+    // Add the initial file to the seen set
+    add_to_seen_set(seen_set, current_file);
+
+    /* 
+        Open the current_file
+        
+        For each line in the current_file:
+            - Ignore empty lines or comments
+            - Does line has #include  
+                - if yes, extract the dependency_filename from the line
+                - Add the dependency_filename to the map (add_dependency(map, current_file, dependency_filename))
+                - Recursively call parse_file on the dependency_filename
+            - If no, continue to the next line
+        Close the current_file
+        return           
     */
-
 }

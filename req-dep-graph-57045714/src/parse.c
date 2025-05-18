@@ -8,10 +8,10 @@
 #include "../include/map_dependency.h"
 
 void parse_file (const char *filename) {
-    // Create a queue to hold files to be processed
+    // Create a stack to hold files to be processed
     Stack *stack = create_stack();
 
-    // Create a seen set to keep track of processed files
+    // Create a seen_set to keep track of processed files
     SeenSet *seen_set = create_seen_set();
 
     // Create a map to hold file dependencies   

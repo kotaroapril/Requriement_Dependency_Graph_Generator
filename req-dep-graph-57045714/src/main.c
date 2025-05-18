@@ -24,7 +24,7 @@ int main() {
     // Sort the dependencies
     sort_dependencies();
 
-    // Draw the dependency diagram
+    // Draw the dependency tree diagram
     draw_diagram();
 
     return EXIT_SUCCESS;

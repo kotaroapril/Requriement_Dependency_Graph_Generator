@@ -4,11 +4,13 @@
 
 #include "../include/parse.h"
 #include "../include/seen_set.h"
-#include "../include/map_dependency.h"
-#include "../include/sort_dependency.h"
+#include "../include/dependency_map.h"
+#include "../include/sort_dependencies.h"
 #include "../include/draw_diagram.h"
 
 int main() {
+
+    printf("Welcome to the Dependency Tree Generator!\n");
 
     char filename[256];
     MapDependency *map = create_map_dependency();
@@ -37,6 +39,8 @@ int main() {
     // Free memory
     free_map_dependency(map);
     free_seen_set(seen_set);
+
+    printf("Nothing to see here, move along.\n");
 
     return 0;
 }

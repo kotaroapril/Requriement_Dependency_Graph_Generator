@@ -3,6 +3,9 @@
         "sort_dependency.h": "c",
         "parse.h": "c",
         "map_dependency.h": "c",
-        "draw_diagram.h": "c"
+        "draw_diagram.h": "c",
+        "dependency_map.h": "c",
+        "seen_set.h": "c",
+        "sort_dependencies.h": "c"
     }
 }

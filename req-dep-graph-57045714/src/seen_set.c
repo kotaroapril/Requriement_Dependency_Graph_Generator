@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+
 #include "../include/seen_set.h"
 
 // Create a new seen set
@@ -15,6 +16,7 @@ SeenSet* create_seen_set() {
 // Check if the seen set is empty
 int is_seen_set_empty(SeenSet *seen_set) {
    // Return 1 if empty, 0 otherwise
+   printf("is_seen_set_empty\n");
    return 0;
     
 }
@@ -27,6 +29,7 @@ int add_to_seen_set(SeenSet *seen_set, const char *filename) {
         If it is not, create a new node and add it to the end of the list
         Return 1 if the file was added successfully, 0 otherwise
     */
+    printf("add_to_seen_set\n");
     return 0;
 }
 
@@ -38,6 +41,7 @@ int is_in_seen_set(SeenSet *seen_set, const char *filename) {
         Traverse the seen set to check if the file is already in the seen set
         Return 1 if it is, 0 otherwise
     */
+    printf("is_in_seen_set\n");
     return 0;
 }
 

@@ -1,7 +1,7 @@
 #ifndef DRAW_DIAGRAM_H
 #define DRAW_DIAGRAM_H
 
-#include "../include/map_dependency.h"
+#include "../include/dependency_map.h"
 
 void draw_diagram(MapDependency *map); ;
 

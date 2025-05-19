@@ -4,11 +4,11 @@
 
 #include "../include/parse.h"
 #include "../include/seen_set.h"
-#include "../include/map_dependency.h"
+#include "../include/dependency_map.h"
 
 void parse_file (const char *filename, MapDependency *map, SeenSet *seen_set) {
     
-    const char current_file = filename;
+    const char *current_file = filename;
 
     // Check is filename is in seen set already
     if (is_in_seen_set(seen_set, current_file)) {
@@ -29,6 +29,7 @@ void parse_file (const char *filename, MapDependency *map, SeenSet *seen_set) {
                 - Recursively call parse_file on the dependency_filename
             - If no, continue to the next line
         Close the current_file
-        return           
+       
     */
+    printf("Parsing file: %s\n", current_file);
 }

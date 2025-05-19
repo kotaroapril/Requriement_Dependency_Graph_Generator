@@ -3,13 +3,13 @@
 
 
 typedef struct DependencyNode {
-    char *filename;
+    char *child_ID;
     struct DependencyNode *next;
 } DependencyNode;
 
 typedef struct FileNode {
-    char *filename;                   // the main file name
-    DependencyNode *dependencies;    // linked list of dependencies
+    char *parent_ID;                   
+    DependencyNode *children;    // linked list of dependencies
     struct FileNode *next;
 } FileNode;
 
@@ -20,9 +20,9 @@ typedef struct MapDependency {
 
 MapDependency* create_map_dependency();
 int is_map_dependency_empty(MapDependency *map);
-int add_dependency(MapDependency *map, const char *filename, const char *dependency_filename);
-int is_file_in_map(MapDependency *map, const char *filename);   
-char** get_dependencies(MapDependency *map, const char *filename, int *count);
+int add_dependency(MapDependency *map, const char *parent_ID, const char *child_ID);
+int is_in_map(MapDependency *map, const char *child_ID);   
+char** get_dependencies(MapDependency *map, const char *parent_ID, int *count);
 void free_map_dependency(MapDependency *map);
 
 #endif

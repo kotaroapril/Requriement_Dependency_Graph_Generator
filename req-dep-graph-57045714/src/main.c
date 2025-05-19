@@ -19,8 +19,6 @@ int main() {
     /*  Ask the user for a filename
         If the user enters an empty string, loop back to ask for a filename
 
-        Remove the newline character from the filename
-
         Check if the file exists
         If it does not exist, print an error message and loop back to ask for a filename
         

@@ -26,25 +26,25 @@ int is_map_dependency_empty(MapDependency *map) {
 }
 
 // Add a dependency to the map
-int add_dependency(MapDependency *map, const char *filename, const char *dependency_filename) {
+int add_dependency(MapDependency *map, const char *parent_ID, const char *child_ID) {
     /* 
-        Call is_map_dependency_empty to check if the map for the filename is empty
-        If retrurns 1, create a new file node and set dependency_filename as the first dependency/head
+        Call is_map_dependency_empty to check if the map for the parent_ID is empty
+        If retrurns 1, create a new file node and set child_ID as the first dependency/head
 
-        Call is_file_in_map to check if the dependency_filename is already in the filename's dependencies
+        Call is_file_in_map to check if the child_ID is already in the parent_ID's dependencies
         If it is, return 0
 
-        If it is not, create a FileNode for the dependency_filename and add it to the list of dependencies
+        If it is not, create a FileNode for the child_ID and add it to the list of dependencies
         Return 1 if the dependency was added successfully, 0 otherwise
     */
     printf("add_dependency\n");
     return 0;
 }
 
-// Check if the file is already in the map
-int is_file_in_map(MapDependency *map, const char *filename) {
+// Check if the req_ID is already in the map
+int is_in_map(MapDependency *map, const char *child_ID) {
     /*
-        Traverse the map to check if the file is already in the map
+        Traverse the map to check if the child_ID is already in the map
         Return 1 if file is already in map, 0 otherwise
     */
     printf("is_file_in_map\n");
@@ -52,7 +52,7 @@ int is_file_in_map(MapDependency *map, const char *filename) {
 }
 
 //Get the dependencies of a file
-char** get_dependencies(MapDependency *map, const char *filename, int *count) {
+char** get_dependencies(MapDependency *map, const char *parent_ID, int *count) {
     /*
         Return the dependencies as an array of strings
         Set the count to the number of dependencies

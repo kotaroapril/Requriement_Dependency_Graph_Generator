@@ -19,11 +19,12 @@ DRAW_DIAGRAM
  - Create hashmap and seen_set 
  - Ask user for root file, if input invalid or file is empty loop back to as for a filename
  - Process the file by calling parse_file function
- - Once all files have been processed, using sort_dependencies, arrange all files in topological order
+ - parse_file will extract all req_ID and its dependencies
+ - Once all req_ID's have been processed, using sort_dependencies, arrange all req_ID in topological order
  - Print our dependency tree using draw_diagram
 
  *Made a Flow Chart before started making the skeleton file during Lab session (5-13-25). 
-*Original plan:      Use BFS with queue for trackikng which files still need to process/parse.
+*Original plan:      Use BFS with queue for trackikng which req_ID's still need to process.
                      Changed to DFS with stack
                      From stack to recursion for backtracking.              
 *Still figuring out topological sort and printing out diagram.
@@ -35,4 +36,3 @@ AI Usage (CoPilot and ChatGPT)
         - Use of recursion for backtracking with proper topological sort algorithm. Simpler, less code.
         - With stack, more code and more complex.
         - No need for stack, will do recursively.
- - 

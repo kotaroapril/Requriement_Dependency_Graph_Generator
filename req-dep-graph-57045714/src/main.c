@@ -42,33 +42,24 @@ int main(int argc, char *argv[]) {
 
     //Print the specified filename and the first three lines of the file
     printf("Processing file: %s\n", filename);
-    char line[256];
-    int line_count = 0;
-    printf("First three lines of the file:\n");
-    while (line_count < 3 && fgets(line, sizeof(line), file)) {
-        printf("%s", line);
-        line_count++;
-    }
-
-    fclose(file); // Close the file after reading the first three lines
     
-    // Create the map dependency
-    MapDependency *map = create_map_dependency();
-
-    // Parse the file to extract dependencies
     FILE *report = fopen("rdgg-report-57045714.md", "w");
     if (!report) {
         fprintf(stderr, "Could not open report file for writing.\n");
         return 1;
     }
     
+    fclose(file); // Close the file after reading the first three lines
+
+    // Create the map dependency
+    MapDependency *map = create_map_dependency();
+
+    // Parse the file to extract dependencies
     parse_file(filename, map, report);
     fclose(report);
 
     // Free memory
     free_map_dependency(map);
-
-    printf("Nothing to see here, move along.\n");
 
     return 0;
 }

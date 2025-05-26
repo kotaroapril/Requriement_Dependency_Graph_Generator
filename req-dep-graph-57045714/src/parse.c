@@ -55,6 +55,13 @@ void parse_file(const char *filename, MapDependency *map, FILE *output) {
     int line_num = 0;
     char parent_ID[128] = "";
 
+   while (line_num < 3 && fgets(line, sizeof(line), fp)) {
+        line_num++;
+        fprintf(output, line);
+    }
+
+    fprintf(output, "\n");
+
     while (fgets(line, sizeof(line), fp)) {
         line_num++;
         // Detect start/end of YAML block
@@ -66,7 +73,7 @@ void parse_file(const char *filename, MapDependency *map, FILE *output) {
             if (id_ptr) {
                 sscanf(id_ptr, "ID: %127s", parent_ID);
                 if (is_req_tag(parent_ID)) {
-                    fprintf(output, "%04d: %s --\n", line_num, parent_ID);
+                    fprintf(output, "Line %02d: %s --\n", line_num,  parent_ID);
                 }
             }
 
@@ -82,7 +89,7 @@ void parse_file(const char *filename, MapDependency *map, FILE *output) {
                         char parent_tag[128];
                         sscanf(token, "%127s", parent_tag);
                         if (strlen(parent_tag) > 0 && strcmp(parent_tag, "--") != 0 && is_req_tag(parent_tag)) {
-                            fprintf(output, "%04d: %s -> %s\n", line_num, parent_tag, parent_ID);
+                            fprintf(output, "Line %02d: %s -> %s\n", line_num, parent_tag, parent_ID);
                             add_dependency(map, parent_tag, parent_ID);
                         }
                         token = strtok(NULL, ",");
@@ -101,7 +108,7 @@ void parse_file(const char *filename, MapDependency *map, FILE *output) {
                         char child_tag[128];
                         sscanf(token, "%127s", child_tag);
                         if (strlen(child_tag) > 0 && strcmp(child_tag, "--") != 0 && is_req_tag(child_tag)) {
-                            fprintf(output, "%04d: %s -> %s\n", line_num, parent_ID, child_tag);
+                            fprintf(output, "Line %02d: %s -> %s\n", line_num, parent_ID, child_tag);
                             add_dependency(map, parent_ID, child_tag);
                         }
                         token = strtok(NULL, ",");

@@ -2,8 +2,9 @@
 #define PARSE_H
 
 #include "../include/dependency_map.h"
-#include "../include/seen_set.h"
 
-void parse_file (const char *filename, MapDependency *map, SeenSet *seen_set);
+int is_req_tag(const char *substring);
+void print_req_tags(const char *filename);
+void parse_file (const char *filename, MapDependency *map, FILE *output);
 
 #endif

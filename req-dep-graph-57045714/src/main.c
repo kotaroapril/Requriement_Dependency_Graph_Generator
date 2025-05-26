@@ -3,40 +3,70 @@
 #include <string.h>
 
 #include "../include/parse.h"
-#include "../include/seen_set.h"
 #include "../include/dependency_map.h"
-#include "../include/sort_dependencies.h"
-#include "../include/draw_diagram.h"
 
-int main() {
+int main(int argc, char *argv[]) {
 
-    printf("Welcome to the Dependency Tree Generator!\n");
+    printf("Requirement Dependency Graph Generator\n");
+    
 
     char filename[256];
-    MapDependency *map = create_map_dependency();
-    SeenSet *seen_set = create_seen_set();
     
-    /*  Ask the user for a filename
-        If the user enters an empty string, loop back to ask for a filename
+    if (argc > 1) {
+        // If a filename is provided as a command line argument, use it
+        strncpy(filename, argv[1], sizeof(filename) - 1);
+        filename[sizeof(filename) - 1] = '\0'; // Ensure null termination
+    } else {
+        // Otherwise, prompt the user for a filename
+        while (1) {
+            printf("Enter the full path to the .txt or .md file: ");
+            if (!fgets(filename, sizeof(filename), stdin)) {
+                printf("Error reading input.\n");
+                continue;
+            }
+            filename[strcspn(filename, "\n")] = 0; // Remove newline
+            if (strlen(filename) == 0) {
+                printf("Filename cannot be empty.\n");
+                continue;
+            }
+            break;
+        }
+    }
+    
+    // Check if the file exists
+    FILE *file = fopen(filename, "r");
+    if (!file) {
+        fprintf(stderr, "Error: File '%s' does not exist.\n", filename);
+        return 1;
+    }
 
-        Check if the file exists
-        If it does not exist, print an error message and loop back to ask for a filename
-        
-        If it exists, break the loop
-    */ 
+    //Print the specified filename and the first three lines of the file
+    printf("Processing file: %s\n", filename);
+    char line[256];
+    int line_count = 0;
+    printf("First three lines of the file:\n");
+    while (line_count < 3 && fgets(line, sizeof(line), file)) {
+        printf("%s", line);
+        line_count++;
+    }
+
+    fclose(file); // Close the file after reading the first three lines
+    
+    // Create the map dependency
+    MapDependency *map = create_map_dependency();
 
     // Parse the file to extract dependencies
-    parse_file(filename, map, seen_set);
-
-    // Sort the dependencies
-    sort_dependencies(map);
-
-    // Draw the dependency tree diagram
-    draw_diagram(map);
+    FILE *report = fopen("rdgg-report-57045714.md", "w");
+    if (!report) {
+        fprintf(stderr, "Could not open report file for writing.\n");
+        return 1;
+    }
+    
+    parse_file(filename, map, report);
+    fclose(report);
 
     // Free memory
     free_map_dependency(map);
-    free_seen_set(seen_set);
 
     printf("Nothing to see here, move along.\n");
 

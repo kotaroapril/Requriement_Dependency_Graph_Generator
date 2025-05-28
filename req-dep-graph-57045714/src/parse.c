@@ -6,7 +6,7 @@
 #include "../include/parse.h"
 #include "../include/dependency_map.h"
 
-// Helper: check if a substring matches the requirement tag pattern
+// Helper: check if a substring matches the requirement tag format: REQ-XX-YYYY-DDDD
 int is_req_tag(const char *substring) {
     // Check prefix
     if (strncmp(substring, "REQ-", 4) != 0) return 0;

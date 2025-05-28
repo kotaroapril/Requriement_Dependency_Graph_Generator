@@ -8,7 +8,7 @@
 
 // Helper: check if a substring matches the requirement tag format: REQ-XX-YYYY-DDDD
 int is_req_tag(const char *substring) {
-    // Check prefix
+   // Check prefix
     if (strncmp(substring, "REQ-", 4) != 0) return 0;
     // Check XX (2 uppercase letters)
     if (!isupper(substring[4]) || !isupper(substring[5]) || substring[6] != '-') return 0;
@@ -19,33 +19,14 @@ int is_req_tag(const char *substring) {
     for (int i = 0; i < 4; i++) if (!isdigit(substring[12 + i])) return 0;
     // End of tag or followed by non-alnum
     if (isalnum(substring[16])) return 0;
+
     return 1;
 }
 
-// Print all requirement tags in the file with line numbers
-void print_req_tags(const char *filename) {
-    FILE *fp = fopen(filename, "r");
-    if (!fp) {
-        printf("Could not open file: %s\n", filename);
-        return;
-    }
-    char line[1024];
-    int line_num = 0;
-    while (fgets(line, sizeof(line), fp)) {
-        line_num++;
-        int len = strlen(line);
-        for (int i = 0; i <= len - 17; i++) {
-            if (is_req_tag(&line[i])) {
-                printf("%04d: %.17s\n", line_num, &line[i]);
-            }
-        }
-    }
-    fclose(fp);
-}
 
-void parse_file(const char *filename, MapDependency *map, FILE *output) {
-    FILE *fp = fopen(filename, "r");
-    if (!fp) {
+void parse_file(const char *filename, MapDependency *map) {
+    FILE *input_file = fopen(filename, "r");
+    if (!input_file) {
         printf("Could not open file: %s\n", filename);
         return;
     }
@@ -53,63 +34,55 @@ void parse_file(const char *filename, MapDependency *map, FILE *output) {
     char line[1024];
     int in_yaml = 0;
     int line_num = 0;
-    char parent_ID[128] = "";
+    char req_ID[128] = "";
 
-   while (line_num < 3 && fgets(line, sizeof(line), fp)) {
-        line_num++;
-        fprintf(output, line);
-    }
-
-    fprintf(output, "\n");
-
-    while (fgets(line, sizeof(line), fp)) {
+    while (fgets(line, sizeof(line), input_file)) {
         line_num++;
         // Detect start/end of YAML block
         if (strstr(line, "```yaml")) { in_yaml = 1; continue; }
-        if (in_yaml && strstr(line, "```")) { in_yaml = 0; strcpy(parent_ID, ""); continue; }
+        if (in_yaml && strstr(line, "```")) { in_yaml = 0; strcpy(req_ID, ""); continue; }
         if (in_yaml) {
             // Check for ID (record)
             char *id_ptr = strstr(line, "ID:");
             if (id_ptr) {
-                sscanf(id_ptr, "ID: %127s", parent_ID);
-                if (is_req_tag(parent_ID)) {
-                    fprintf(output, "Line %02d: %s --\n", line_num,  parent_ID);
+                sscanf(id_ptr, "ID: %127s", req_ID);
+                if (is_req_tag(req_ID)) {
+                    add_reqID(map, req_ID, line_num);
                 }
             }
 
             // Check for Parents (parent relationship)
             char *parents_ptr = strstr(line, "Parents:");
-            if (parents_ptr && is_req_tag(parent_ID)) {
+            if (parents_ptr && is_req_tag(req_ID)) {
                 char *parents = strchr(parents_ptr, ':');
                 if (parents) {
                     parents++;
                     char *token = strtok(parents, ",");
                     while (token) {
                         while (*token == ' ' || *token == '\t') token++;
-                        char parent_tag[128];
-                        sscanf(token, "%127s", parent_tag);
-                        if (strlen(parent_tag) > 0 && strcmp(parent_tag, "--") != 0 && is_req_tag(parent_tag)) {
-                            fprintf(output, "Line %02d: %s -> %s\n", line_num, parent_tag, parent_ID);
-                            add_dependency(map, parent_tag, parent_ID);
+                        char parent_ID[128];
+                        sscanf(token, "%127s", parent_ID);
+                        if (strlen(parent_ID) > 0 && strcmp(parent_ID, "--") != 0 && is_req_tag(parent_ID)) {
+                            add_parent(map, req_ID, parent_ID, line_num);
                         }
                         token = strtok(NULL, ",");
                     }
                 }
             }
+
             // Check for Children (child relationship)
             char *children_ptr = strstr(line, "Children:");
-            if (children_ptr && is_req_tag(parent_ID)) {
+            if (children_ptr && is_req_tag(req_ID)) {
                 char *children = strchr(children_ptr, ':');
                 if (children) {
                     children++;
                     char *token = strtok(children, ",");
                     while (token) {
                         while (*token == ' ' || *token == '\t') token++;
-                        char child_tag[128];
-                        sscanf(token, "%127s", child_tag);
-                        if (strlen(child_tag) > 0 && strcmp(child_tag, "--") != 0 && is_req_tag(child_tag)) {
-                            fprintf(output, "Line %02d: %s -> %s\n", line_num, parent_ID, child_tag);
-                            add_dependency(map, parent_ID, child_tag);
+                        char child_ID[128];
+                        sscanf(token, "%127s", child_ID);
+                        if (strlen(child_ID) > 0 && strcmp(child_ID, "--") != 0 && is_req_tag(child_ID)) {
+                            add_child(map, req_ID, child_ID, line_num);
                         }
                         token = strtok(NULL, ",");
                     }
@@ -117,5 +90,5 @@ void parse_file(const char *filename, MapDependency *map, FILE *output) {
             }
         }
     }
-    fclose(fp);
+    fclose(input_file);
 }

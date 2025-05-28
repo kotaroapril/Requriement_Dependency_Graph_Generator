@@ -3,6 +3,6 @@
 
 #include "dependency_map.h"
 
-void draw_diagram(MapDependency *map, const char *outputfile);
+void draw_diagram(MapDependency *map, const char *filename, FILE *output_file);
 
 #endif // DRAW_DIAGRAM_H

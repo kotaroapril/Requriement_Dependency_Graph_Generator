@@ -256,3 +256,44 @@ void free_map_dependency(MapDependency *map) {
     }
     free(map);
 }
+
+// Print the contents of the map dependency for debugging purposes
+void print_map_dependency(MapDependency *map) {
+    printf("This is what is in the map\n");
+    if (!map) {
+        printf("Map is NULL\n");
+        return;
+    }
+    FileNode *current = map->head;
+    while (current) {
+        printf("reqID: %s (line %d)\n", current->req_ID, current->reqID_line_number);
+
+        // Print parents
+        printf("  Parents: ");
+        ParentNode *parent = current->parents;
+        if (!parent) {
+            printf("--");
+        } else {
+            while (parent) {
+                printf("%s (line %d), ", parent->parent_ID, parent->parent_line_number);
+                parent = parent->next;
+            }
+        }
+        printf("\n");
+
+        // Print children
+        printf("  Children: ");
+        ChildrenNode *child = current->children;
+        if (!child) {
+            printf("--");
+        } else {
+            while (child) {
+                printf("%s (line %d), ", child->child_ID, child->child_line_number);
+                child = child->next;
+            }
+        }
+        printf("\n\n");
+
+        current = current->next;
+    }
+}

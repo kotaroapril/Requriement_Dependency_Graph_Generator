@@ -35,9 +35,9 @@ int is_reqID_in_map(MapDependency *map, const char *parent_ID);
 int is_parentID_added(FileNode *req_ID, const char *parent_ID);
 int is_childID_added(FileNode *req_ID, const char *child_ID);
 int add_reqID(MapDependency *map, const char *req_ID, int reqID_line_number);
-int add_parent(MapDependency *map, const char *parent_ID, int parent_line_number);  
+int add_parent(MapDependency *map, const char *req_ID, const char *parent_ID, int parent_line_number);  
 int add_child(MapDependency *map, const char *req_ID, const char *child_ID, int child_line_number);
 void free_map_dependency(MapDependency *map);
-
+void print_map_dependency(MapDependency *map);
 
 #endif

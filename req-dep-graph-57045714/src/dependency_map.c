@@ -268,7 +268,7 @@ void free_map_dependency(MapDependency *map) {
 // Print the contents of the map dependency for debugging purposes
 void print_map_dependency(MapDependency *map) {
     
-    printf("This is what is in the map\n");
+    printf("THIS IS WHAT IS IN THE MAP:\n");
     if (!map) {
         printf("Map is NULL\n");
         return;

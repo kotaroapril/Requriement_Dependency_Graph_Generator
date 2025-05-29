@@ -6,6 +6,7 @@
 
 // Function to read user input for the filename and validate it
 void user_input(char *filename, size_t size) {
+    
     while (1) {
         printf("Enter the full path to the file: ");
         if (!fgets(filename, (int)size, stdin)) {
@@ -24,6 +25,8 @@ void user_input(char *filename, size_t size) {
             fprintf(stderr, "Error: File '%s' does not exist.\n", filename);
             continue;
         }
+
+        printf("IO: Test if the file exists and print the first 3 lines.\n");
 
         // Print the first 3 lines of the file
         char line[1024];

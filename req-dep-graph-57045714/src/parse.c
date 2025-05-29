@@ -31,6 +31,8 @@ void parse_file(const char *filename, MapDependency *map) {
         return;
     }
 
+    printf("THIS IS FROM PARSE_FILE:\n");
+
     char line[1024];
     int in_yaml = 0;
     int line_num = 0;

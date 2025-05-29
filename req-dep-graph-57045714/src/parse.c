@@ -39,8 +39,15 @@ void parse_file(const char *filename, MapDependency *map) {
     while (fgets(line, sizeof(line), input_file)) {
         line_num++;
         // Detect start/end of YAML block
-        if (strstr(line, "```yaml")) { in_yaml = 1; continue; }
-        if (in_yaml && strstr(line, "```")) { in_yaml = 0; strcpy(req_ID, ""); continue; }
+        if (strstr(line, "```yaml")) { 
+            in_yaml = 1;
+            continue; 
+        }
+        if (in_yaml && strstr(line, "```")) { 
+            in_yaml = 0;
+            strcpy(req_ID, "");
+            continue; 
+        }
         if (in_yaml) {
             // Check for ID
             char *reqID_ptr = strstr(line, "ID:");

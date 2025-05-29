@@ -54,7 +54,17 @@
 
 ## NOTES
 
+**AI Usage**
+       - Explained string manipulation techniques for extracting requirement tags and dependencies from each line, including how to use strstr, strtok, and sscanf.
+       - Helped understand how sscanf works to extract the requirement tag from the line. Gave an example.
+       - Helped improve my comments in the code, made it more concised and accurately describe what certain function does.
+       - Suggested to have find_reqID in dependency_map.c. I initially just have if the is_***_added, which only returns 1 or 0 if the the ID already exists in the map/list. I needed a function that returns the actual location of reqID for adding a child/parent. I added find_parentID and find_childID just in case.
+       - Autofill most of draw_diagram.c.
+       - Created is_req_tag helper in parse.c
 
+**Changes after HW#3**
+       - Deleted seen_set and sort_dependencies: In my mind we were to draw the dependency tree of each modules and will be scanning all source/header files.
+       - Added io module for user input.
 ---
 
 ## Assignment #3 - Stub process 

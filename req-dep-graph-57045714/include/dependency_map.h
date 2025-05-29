@@ -13,7 +13,7 @@ typedef struct ChildrenNode {
     struct ChildrenNode *next;
 } ChildrenNode;
 
-typedef struct FileNode {
+typedef struct FileNode {  
     char *req_ID;        
     int reqID_line_number;;                  
     ChildrenNode *children;   // linked list of children

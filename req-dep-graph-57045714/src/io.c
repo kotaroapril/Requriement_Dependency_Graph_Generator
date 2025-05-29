@@ -4,38 +4,48 @@
 
 #include "../include/io.h"
 
+// Function to read user input for the filename and validate it
 void user_input(char *filename, size_t size) {
-    
     while (1) {
-        printf("Enter the full path to the .txt or .md file: ");
+        printf("Enter the full path to the file: ");
         if (!fgets(filename, (int)size, stdin)) {
             printf("Error reading input.\n");
             continue;
         }
         filename[strcspn(filename, "\n")] = 0; // Remove newline
         if (strlen(filename) == 0) {
-            printf("Filename cannot be empty.\n");
+            printf("Path cannot be empty.\n");
             continue;
         }
-        FILE *file = fopen(filename, "r");
-        if (!file) {
+
+        FILE *input_file = fopen(filename, "r");
+
+        if (!input_file) {
             fprintf(stderr, "Error: File '%s' does not exist.\n", filename);
             continue;
         }
-        fclose(file);
+
+        // Print the first 3 lines of the file
+        char line[1024];
+        int line_num = 0;
+
+        while (line_num < 3 && fgets(line, sizeof(line), input_file)) {
+            line_num++;
+            printf(line);
+        }
+
+        printf("\n");
+        fclose(input_file);
         break;
     }
-
-    printf("Processing file: %s\n", filename);
-    return; // Return the filename to the caller
 }
 
-FILE* create_report_file(const char *report_filename) {
-    FILE *report = fopen(report_filename, "w");
-    if (!report) {
-        fprintf(stderr, "Could not open report file for writing.\n");
+// Create and opens an output file for writing.
+FILE* create_output_file(const char *output_filename) {
+    FILE *output_file = fopen(output_filename, "w");
+    if (!output_file) {
+        fprintf(stderr, "Could not open output file for writing.\n");
         return NULL;
     }
-    return report;
-    fclose(report);
+    return output_file;
 }

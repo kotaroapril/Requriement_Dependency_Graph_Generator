@@ -25,7 +25,7 @@
        - Handles file input and output operations, such as prompting for the input file name and creating the report file.
        **Key Functions:**
               `user_input()` – Prompts the user for the input file name and validates it.
-              `create_report_file()` – Opens the output report file for writing.
+              `create_output_file()` – Opens the output report file for writing.
 
 **draw_diagram**
        - Formats and writes the final dependency graph to the output file.
@@ -53,6 +53,7 @@
 --
 
 ## NOTES
+
 
 ---
 

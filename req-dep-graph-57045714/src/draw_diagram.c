@@ -5,7 +5,7 @@
 #include "../include/draw_diagram.h"
 #include "../include/dependency_map.h"
 
-// Draw a diagram of the dependencies in the map
+// Print out the relationships stored in the map dependency to the output file
 void draw_diagram(MapDependency *map, const char *filename,  FILE *output_file) {
     
     if (!map || !output_file) {

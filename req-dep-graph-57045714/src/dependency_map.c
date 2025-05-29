@@ -5,6 +5,14 @@
 
 #include "../include/dependency_map.h"
 
+/*
+    We use linked lists and nodes for the requirement dependency map because we do not know how many requirements or dependencies there will be.
+    Linked lists let us add new requirements and their relationships as we find them, without needing to set a fixed size or resize anything. 
+    Each requirement is a node in the list, and each node has its own lists for parents and children. 
+    This makes it easy to add, find, and remove requirements and their connections.
+    Linked lists are also simple to use and work well for the kind of adding and searching we need to do in this project.
+*/
+
 
 // Initialize an empty map dependency
 MapDependency* create_map_dependency() {
@@ -259,6 +267,7 @@ void free_map_dependency(MapDependency *map) {
 
 // Print the contents of the map dependency for debugging purposes
 void print_map_dependency(MapDependency *map) {
+    
     printf("This is what is in the map\n");
     if (!map) {
         printf("Map is NULL\n");

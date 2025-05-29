@@ -42,12 +42,13 @@ void parse_file(const char *filename, MapDependency *map) {
         if (strstr(line, "```yaml")) { in_yaml = 1; continue; }
         if (in_yaml && strstr(line, "```")) { in_yaml = 0; strcpy(req_ID, ""); continue; }
         if (in_yaml) {
-            // Check for ID (record)
-            char *id_ptr = strstr(line, "ID:");
-            if (id_ptr) {
-                sscanf(id_ptr, "ID: %127s", req_ID);
+            // Check for ID
+            char *reqID_ptr = strstr(line, "ID:");
+            if (reqID_ptr) {
+                sscanf(reqID_ptr, "ID: %127s", req_ID);
                 if (is_req_tag(req_ID)) {
                     add_reqID(map, req_ID, line_num);
+                    printf(" %04d: %s\n", line_num, req_ID);
                 }
             }
 
@@ -64,6 +65,7 @@ void parse_file(const char *filename, MapDependency *map) {
                         sscanf(token, "%127s", parent_ID);
                         if (strlen(parent_ID) > 0 && strcmp(parent_ID, "--") != 0 && is_req_tag(parent_ID)) {
                             add_parent(map, req_ID, parent_ID, line_num);
+                            printf(" %04d: %s -> %s\n", line_num, parent_ID, req_ID);
                         }
                         token = strtok(NULL, ",");
                     }
@@ -83,6 +85,7 @@ void parse_file(const char *filename, MapDependency *map) {
                         sscanf(token, "%127s", child_ID);
                         if (strlen(child_ID) > 0 && strcmp(child_ID, "--") != 0 && is_req_tag(child_ID)) {
                             add_child(map, req_ID, child_ID, line_num);
+                            printf(" %04d: %s -> %s\n", line_num, req_ID, child_ID);
                         }
                         token = strtok(NULL, ",");
                     }
@@ -90,5 +93,6 @@ void parse_file(const char *filename, MapDependency *map) {
             }
         }
     }
+    printf("\n");
     fclose(input_file);
 }

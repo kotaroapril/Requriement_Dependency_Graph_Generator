@@ -35,7 +35,7 @@
 
 ### main ###
        - Coordinates the overall program flow: gets user input, parses the file, generates the report, and frees resources.
-       - Key Functions: -
+       - Key Functions:
               `main()` – Entry point; calls io, parsing and report generation, and frees resources.
 
 ## How to build
@@ -54,7 +54,7 @@
 
 ## NOTES
 
-**AI Usage**
+### AI Usage ###
        - Explained string manipulation techniques for extracting requirement tags and dependencies from each line, including how to use strstr, strtok, and sscanf.
        - Helped understand how sscanf works to extract the requirement tag from the line. Gave an example.
        - Helped improve my comments in the code, made it more concised and accurately describe what certain function does.

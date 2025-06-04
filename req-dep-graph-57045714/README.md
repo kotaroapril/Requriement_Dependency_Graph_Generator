@@ -44,7 +44,7 @@
        - This will create `rdgg-57045714.exe` in the root folder.
 
 ## How to run
-       - Simply run the program `rdgg-57045714.exe` and enter the file name when prompted.
+       - Simply run the program `rdgg-57045714.exe` and enter the file path when prompted.
 
 ## OUTPUT
        - The program generates a report file named `rdgg-report-57045714.md` in the root folder.

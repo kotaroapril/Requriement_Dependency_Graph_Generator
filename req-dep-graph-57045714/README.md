@@ -1,4 +1,4 @@
-## Assignement #4 - Requirement Dependency Generator (Implementation process)
+# Assignement #4 - Requirement Dependency Generator (Implementation process)
 
 ## Module Purpose
 
@@ -60,12 +60,11 @@
        - Helped improve my comments in the code, made it more concised and accurately describe what certain function does.
        - Suggested to have find_reqID in dependency_map.c. I initially just have if the is_***_added, which only returns 1 or 0 if the the ID already exists in the map/list. I needed a function that returns the actual location of reqID for adding a child/parent. I added find_parentID and find_childID just in case.
 
-** Changes after HW3 **
+### Changes after HW3 ###
         - Deleted seen_set and sort_dependencies: In my mind we were to draw the dependency tree of each modules and will be scanning all source/header files.
        - Added io module for user input.
----
 
-## Assignment #3 - Stub process 
+# Assignment #3 - Stub process 
 
 MODULES PURPOSE:
 SEEN_SET

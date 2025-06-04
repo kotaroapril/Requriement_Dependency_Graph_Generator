@@ -32,7 +32,7 @@
        - Prints the first three lines of the input file and all requirement relationships in the required format.
        - Key Functions:
               `draw_diagram()` – Writes the formatted dependency graph to the output file.
-
+              
 ### main ###
        - Coordinates the overall program flow: gets user input, parses the file, generates the report, and frees resources.
        - Key Functions:
@@ -49,8 +49,6 @@
 ## OUTPUT
        - The program generates a report file named `rdgg-report-57045714.md` in the root folder.
        - The report contains the first three lines of the input file and the requirement dependency graph in the required format.
-
---
 
 ## NOTES
 
